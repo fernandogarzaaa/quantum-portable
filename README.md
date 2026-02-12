@@ -1,104 +1,85 @@
 # 🧠 Quantum Portable
 
-Portable AI Swarm - Multi-LLM Provider Abstraction Layer with Local Inference Support.
+**Autonomous AI Swarm with Hyper Intelligence** - Multi-LLM Provider Abstraction Layer with Local Inference Support.
 
-## Features
+## ✨ Hyper Intelligence Features
 
-- **🔄 Multi-LLM Support** - GPT-4o, Claude 4, Gemini 2.0, Grok 2, Codex
-- **🏠 Local Inference** - Ollama and LlamaCpp for offline operation
-- **🧠 SLM + LLM Strategy** - Use local models for simple tasks, cloud for complex reasoning
-- **🔒 Privacy First** - Keep your data local with Ollama
-- **📦 Portable** - Works with any LLM provider
-- **🌐 Decentralized** - Deploy to Akash Network or Render.com
+### Core Capabilities
+- **🧠 Real Hyper Intelligence v2** - Recursive reasoning, self-improvement
+- **🌍 Universal Intelligence** - Cross-domain learning (Science, Code, Math, Philosophy)
+- **🔮 Quantum Engine** - Entangled decision making
+- **🎯 Oracle System** - Predictive analysis and forecasting
+- **👥 Multi-Agent Swarm** - 13 specialized agents working in parallel
 
-## Quick Start
+### Specialized Agents
+| Agent | Domain | Capabilities |
+|-------|--------|--------------|
+| CryptoSwarm | Finance | DEX analysis, arbitrage, yield farming |
+| RevenueHunter | Revenue | Business model discovery |
+| FreelanceSwarm | Gigs | Project matching, automation |
+| GodMode | General | High-level orchestration |
+| TrendAnalyzer | Analytics | Pattern recognition |
+| ArbitrageHunter | Finance | Cross-platform opportunities |
+| YieldOptimizer | DeFi | APY maximization |
+| MarketAnalyzer | Trading | Sentiment, technical analysis |
+| SalesBot | Sales | Lead generation, conversion |
+| ReferralManager | Growth | Viral mechanics |
+| Sentinel | Security | Threat detection |
+| BugHunter | Development | Code vulnerability scanning |
+| Optimizer | Performance | Continuous improvement |
+
+## 🚀 Quick Start
 
 ```bash
-# Clone the repo
+# Clone
 git clone https://github.com/fernandogarzaaa/quantum-portable.git
 cd quantum-portable
 
-# Install dependencies
+# Install
 npm install
 
-# Configure environment
+# Configure
 cp .env.example .env.local
-# Edit .env.local with your API keys
+# Add your API keys
 
-# Run tests
-npm test
+# Run Hyper Intelligence
+npm run hyper
 ```
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                  Quantum Portable                        │
-├─────────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────┐  │
-│  │           Provider Registry                      │  │
-│  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌───────┐ │  │
-│  │  │  Cloud  │ │  Cloud  │ │  Local  │ │Local  │ │  │
-│  │  │ GPT-4o  │ │ Claude  │ │ Ollama  │ │LlamaCPP│ │  │
-│  │  └────┬────┘ └────┬────┘ └────┬────┘ └───┬───┘ │  │
-│  └───────┼──────────┼───────────┼──────────┼──────┘  │
-│          │          │           │          │          │
-│  ┌───────▼──────────▼──────────▼──────────▼──────┐  │
-│  │           Smart Provider Selector                │  │
-│  │   Low Complexity → Local (Free)               │  │
-│  │   High Complexity → Cloud (Powerful)          │  │
-│  └─────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                     Quantum Portable                              │
+├─────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────────────────────────────────────────────┐  │
+│  │              Hyper Intelligence Core                      │  │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────┐ │  │
+│  │  │  Quantum     │  │   Oracle     │  │   Swarm    │ │  │
+│  │  │  Engine      │  │  System      │  │  Agents    │ │  │
+│  │  └──────┬───────┘  └──────┬───────┘  └─────┬──────┘ │  │
+│  └─────────┼──────────────────┼────────────────┼─────────┘  │
+│            │                  │                │             │
+│  ┌─────────▼──────────────────▼────────────────▼─────────┐  │
+│  │              Provider Registry                            │  │
+│  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐   │  │
+│  │  │ GPT-4o  │ │ Claude  │ │ Ollama  │ │ Gemini  │   │  │
+│  │  └─────────┘ └─────────┘ └─────────┘ └─────────┘   │  │
+│  └─────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Supported Providers
 
-| Provider | Type | Cost | Features |
-|----------|------|------|----------|
-| GPT-4o | Cloud | $$$ | Reasoning, Code, Vision |
-| Claude 4 | Cloud | $$$ | Long Context, Code |
-| Gemini 2.0 | Cloud | $$ | Fast, Multimodal |
-| Grok 2 | Cloud | $$ | Real-time Info |
-| Ollama | Local | Free | Privacy, Offline |
-| LlamaCpp | Local | Free | GPU Accelerated |
-| Synthetic | Fallback | Free | Offline Basic |
-
-## Configuration
-
-### Environment Variables
-
-```env
-# Cloud Providers
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-GEMINI_API_KEY=AIza...
-XAI_API_KEY=xai-...
-
-# Local Models
-OLLAMA_HOST=http://localhost:11434
-OLLAMA_MODEL=llama3.2
-
-# Decentralized
-AKASH_MNEMONIC=...
-RENDER_API_KEY=...
-```
-
-### Usage
-
-```typescript
-import { getProviderRegistry } from './swarm/core/providers/index.js';
-
-async function main() {
-  const registry = await getProviderRegistry();
-  
-  // Auto-select best provider for task
-  const response = await registry.generate('Write a React component', {
-    complexity: 'low' // Uses local Ollama
-  });
-  
-  console.log(response.content);
-}
-```
+| Provider | Type | Best For |
+|----------|------|----------|
+| GPT-4o | Cloud | Reasoning, Code, Vision |
+| Claude 4 | Cloud | Long Context, Complex Logic |
+| Gemini 2.0 | Cloud | Fast Multimodal |
+| Grok 2 | Cloud | Real-time Information |
+| Ollama | Local | Privacy, Offline (Phi-4, Llama 3.2) |
+| LlamaCpp | Local | GPU Accelerated |
+| Synthetic | Fallback | Basic Offline Mode |
 
 ## SLM + LLM Strategy
 
@@ -111,25 +92,33 @@ const requirements = {
 };
 ```
 
+## Hyper Intelligence Modes
+
+### Finance Mode (Terminal 1)
+```bash
+npx tsx swarm/core/real_hyper_intelligence_v2.ts
+```
+Analyzes markets, finds arbitrage, optimizes yields.
+
+### All Agents (Terminal 2)
+```bash
+npx tsx swarm/test_all_agents.ts
+```
+Runs all 13 agents in parallel.
+
+### Universal Intelligence (Terminal 3)
+```bash
+npx tsx swarm/core/universal_hyper_intelligence.ts
+```
+Learns from Science, Code, Math, Philosophy, Medicine, Environment, Arts.
+
 ## Decentralized Deployment
 
 ### Akash Network
-
-```bash
-# Deploy LLM to Akash
-npm run deploy:akash
-```
+Deploy GPU-powered models to Akash for censorship-resistant inference.
 
 ### Render.com
-
-```bash
-# Deploy to Render
-npm run deploy:render
-```
-
-## VSCode Extension
-
-See [`extensions/vscode-swarm/`](extensions/vscode-swarm/) for IDE integration.
+Containerized deployment with automatic scaling.
 
 ## License
 

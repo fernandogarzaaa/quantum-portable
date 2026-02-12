@@ -1,12 +1,15 @@
 {
   "name": "quantum-portable",
   "version": "1.0.0",
-  "description": "Portable AI Swarm - Multi-LLM Provider Abstraction Layer with Local Inference Support",
+  "description": "Autonomous AI Swarm with Hyper Intelligence - Multi-LLM Provider Layer",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
     "test": "tsx swarm/test_providers.ts",
+    "hyper": "tsx swarm/core/real_hyper_intelligence_v2.ts",
+    "universal": "tsx swarm/core/universal_hyper_intelligence.ts",
+    "agents": "tsx swarm/test_hyper_intelligence.ts",
     "dev": "tsx swarm/test_providers.ts",
     "clean": "rm -rf dist"
   },
