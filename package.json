@@ -1,0 +1,42 @@
+{
+  "name": "quantum-portable",
+  "version": "1.0.0",
+  "description": "Portable AI Swarm - Multi-LLM Provider Abstraction Layer with Local Inference Support",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsx swarm/test_providers.ts",
+    "dev": "tsx swarm/test_providers.ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "multi-model",
+    "ollama",
+    "claude",
+    "gpt-4",
+    "gemini",
+    "autonomous",
+    "swarm",
+    "quantum"
+  ],
+  "author": "AppForge",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fernandogarzaaa/quantum-portable"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.91.0",
+    "axios": "^1.6.7",
+    "bs58": "^5.0.0",
+    "dotenv": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
