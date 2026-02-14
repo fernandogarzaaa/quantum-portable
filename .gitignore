@@ -1,0 +1,149 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+.env.production.local
+
+# Swarm Secrets / Wallets / Sessions (never commit)
+swarm/data/swarm_wallet.json
+swarm/data/swarm_wallet_backup.json
+swarm/data/finance_wallet.json
+auth_info_baileys*/
+whatsapp_qr*.png
+swarm/quantum_channel.json
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+
+# Build & Production
+dist/
+build/
+dist-ssr/
+*.tsbuildinfo
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+Thumbs.db
+
+# Temporary Files
+*.tmp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Development Scripts (keep version-controlled scripts in /scripts)
+*.ps1
+!scripts/*.ps1
+!scripts/*.sh
+!backend/scripts/*.ps1
+!backend/scripts/*.sh
+
+# Database & Cache
+*.db
+*.sqlite
+*.sqlite3
+dump.rdb
+*.aof
+.cache/
+.eslintcache
+
+# Build Artifacts
+*.class
+*.jar
+*.o
+*.a
+*.dll
+*.exe
+.next/
+.nuxt/
+
+# Rust Build Artifacts
+quantum-core/target/
+static-analyzer-core/target/
+**/target/debug/
+**/target/release/
+**/target/.rustc_info.json
+**/*.rs.bk
+Cargo.lock
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+# Generated/Temporary Documentation (keep primary docs tracked)
+PREVIOUS_*.md
+OLD_*.md
+TEMP_*.md
+DEPRECATED_*.md
+
+# Setup/Installer Temporary Files
+setup-*.ps1
+install-*.ps1
+migrate-*.ps1
+fix-*.ps1
+convert-*.ps1
+
+# Load Test Artifacts
+load-tests/results/
+load-tests/*.json
+load-tests/output/
+
+# Terraform State
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Docker
+.dockerignore
+.docker-sync/
+docker-compose.override.yml
+
+# Quantum Engine (Tracked)
+!QuantumEnginePortable.js
+
+# Runtime Data & Reports (never commit)
+swarm_memory.json
+quantum_analysis_report.json
+QUANTUM_HEALTH_REPORT.json
+quantum_verification_report.json
+reports/
+logs/
+data/
+playwright-report/
+
+swarm/core/quantum_bridge/target/
+whatsapp_qr.png

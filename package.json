@@ -1,0 +1,20 @@
+{
+    "name": "quantum-portable",
+    "version": "1.1.0",
+    "description": "Sovereign Quantum Intelligence Portable Core",
+    "type": "module",
+    "main": "swarm/core/quantum_core.ts",
+    "scripts": {
+        "start": "node --loader ts-node/esm swarm/core/oracle_api_service.ts",
+        "test": "node --loader ts-node/esm scripts/portable_benchmark.ts"
+    },
+    "dependencies": {
+        "@google/genai": "^0.1.0",
+        "dotenv": "^16.4.5",
+        "socket.io-client": "^4.7.5"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5"
+    }
+}
