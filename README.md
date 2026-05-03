@@ -3,7 +3,9 @@
 > **Prototype / archived precursor to [AppForge](https://github.com/fernandogarzaaa/appforge).**
 > This repository captures an early extraction of the "quantum" swarm core that was later folded into AppForge proper. It is preserved for reference and reuse — not actively maintained as a standalone product.
 
-A small TypeScript / Node (ESM) workspace that extracts a self-contained "quantum-inspired" swarm core, an LLM provider abstraction, and a few prototype agents. The earlier AppForge Quantum README that previously lived here described an aspirational full-stack platform (React + Tailwind + Solana payments + visual app builder). None of that lives in this repo — the actual code here is a backend-only library and runner.
+A small TypeScript / Node (ESM) workspace that extracts a self-contained "quantum-inspired" swarm core, an LLM provider abstraction, and a few prototype agents. The earlier AppForge Quantum README that previously lived here described an aspirational full-stack platform (React + Tailwind + Solana payments + visual app builder). The actual *runnable* code here is the backend-only library and runner described below.
+
+> **Leftover AppForge-era artifacts:** the cleanup is partial. `package.json.full`, `.env.example`, and `jsconfig.json` still reference the old AppForge frontend stack (Vite, React, Base44, Solana, Xendit, Sentry, etc.) and are not used by anything in this snapshot. Treat them as historical residue and ignore them when running the code described below.
 
 ## What is actually in this repo
 
@@ -48,7 +50,7 @@ swarm/
   test_providers.ts
 scripts/
   portable_benchmark.ts         # Benchmark harness used by `npm test`
-QUANTUM_LAUNCHER.bat            # Windows launcher
+QUANTUM_LAUNCHER.bat            # Windows launcher — currently broken (calls `npm start`, which targets the missing oracle_api_service.ts; see "Scripts" below)
 ```
 
 ## Dependencies
@@ -80,4 +82,6 @@ Archived precursor. Use [AppForge](https://github.com/fernandogarzaaa/appforge) 
 
 ## License
 
-See [LICENSE](./LICENSE).
+The root [LICENSE](./LICENSE) is Apache-2.0.
+
+> ⚠️ **License inconsistency:** several source files under `swarm/` (e.g. `swarm/core/oracle.ts`, `swarm/core/memory.ts`, `swarm/agents/*.ts`, `swarm/decentralized/akash_provider.ts`) carry per-file `License: MIT` headers in their docstrings. This repo has not been reconciled to a single license. If you reuse code from `swarm/`, treat those files as ambiguously licensed until the headers are updated to match the root LICENSE.
