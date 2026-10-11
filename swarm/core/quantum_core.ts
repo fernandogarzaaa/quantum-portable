@@ -112,6 +112,7 @@ export class QuantumSwarmCore {
                 : null;
             if (!state) return;
 
+            await fs.mkdir(path.dirname(ORACLE_STATE_FILE), { recursive: true });
             await fs.writeFile(ORACLE_STATE_FILE, JSON.stringify({
                 timestamp: new Date().toISOString(),
                 state
