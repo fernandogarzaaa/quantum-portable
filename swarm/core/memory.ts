@@ -10,7 +10,7 @@
 
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { getProviderRegistry, LLMProviderInterface } from '../providers/index.js';
+import { getProviderRegistry } from '../providers/index.js';
 
 // Type definitions
 export interface MemoryEntry {
@@ -46,6 +46,9 @@ export class PersistentMemory {
   private storagePath: string;
   private entries: Map<string, MemoryEntry> = new Map();
   private registry: ReturnType<typeof getProviderRegistry> | null = null;
+  // Serializes persistence writes in mutation order so an older snapshot can
+  // never overwrite a newer one.
+  private writeQueue: Promise<void> = Promise.resolve();
 
   constructor(storagePath: string = './data/memory') {
     this.storagePath = storagePath;
@@ -70,6 +73,31 @@ export class PersistentMemory {
       fs.mkdirSync(this.storagePath, { recursive: true });
       console.log(`[Memory] Created storage directory: ${this.storagePath}`);
     }
+  }
+
+  /**
+   * Generate a unique id for a memory entry
+   */
+  private generateId(): string {
+    return `mem_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+  }
+
+  /**
+   * Persist all entries to the memory.json file.
+   * Writes are serialized in mutation order, and each snapshot is written to a
+   * temporary file and atomically renamed, so readers never see a partial file.
+   */
+  private async persistToFile(): Promise<void> {
+    const run = this.writeQueue.then(async () => {
+      const memoryFile = path.join(this.storagePath, 'memory.json');
+      const tmpFile = `${memoryFile}.${process.pid}.tmp`;
+      const data = JSON.stringify(Array.from(this.entries.values()), null, 2);
+      await fs.promises.writeFile(tmpFile, data, 'utf-8');
+      await fs.promises.rename(tmpFile, memoryFile);
+    });
+    // Keep the queue alive even if a write fails; surface the error to the caller.
+    this.writeQueue = run.catch(() => undefined);
+    await run;
   }
 
   /**
@@ -154,4 +182,13 @@ export class PersistentMemory {
    * Forget (delete) memory entries matching criteria
    */
   async forget(criteria: MemoryQuery): Promise<number> {
-    const toDelete = this.query
+    const toDelete = this.query(criteria);
+    for (const entry of toDelete) {
+      this.entries.delete(entry.id);
+    }
+    await this.persistToFile();
+
+    console.log(`[Memory] Forgot ${toDelete.length} entries`);
+    return toDelete.length;
+  }
+}

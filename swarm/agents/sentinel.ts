@@ -30,7 +30,7 @@ export interface AnomalyDetectionResult {
   id: string;
   timestamp: Date;
   type: 'performance' | 'security' | 'resourceivity';
-  severity' | 'connect: 'low' | 'medium' | 'high' | 'critical';
+  severity: 'low' | 'medium' | 'high' | 'critical';
   description: string;
   metrics: Record<string, unknown>;
   recommendedAction: string;

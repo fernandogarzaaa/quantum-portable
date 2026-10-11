@@ -147,3 +147,6 @@ playwright-report/
 
 swarm/core/quantum_bridge/target/
 whatsapp_qr.png
+
+# Runtime oracle state (written by npm test / oracle runs)
+src/data/

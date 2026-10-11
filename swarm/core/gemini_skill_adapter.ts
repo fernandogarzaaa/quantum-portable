@@ -33,23 +33,20 @@ export class GeminiSkillAdapter {
         }
 
         const modelId = request.usePro ? this.modelPro : this.modelFlash;
-        const model = this.client.getGenerativeModel({
-            model: modelId,
-            generationConfig: request.jsonMode ? { response_mime_type: 'application/json' } : {}
-        });
 
         try {
             console.log(`📡 [GeminiAdapter] Routing to ${modelId}...`);
-            const chat = model.startChat({
-                history: [
+            // @google/genai API: models.generateContent with a multi-turn contents array.
+            const response = await this.client.models.generateContent({
+                model: modelId,
+                contents: [
                     { role: 'user', parts: [{ text: request.system }] },
-                    { role: 'model', parts: [{ text: 'Understood. I have initialized the Sovereign AI cognitive context.' }] }
-                ]
+                    { role: 'model', parts: [{ text: 'Understood. I have initialized the Sovereign AI cognitive context.' }] },
+                    { role: 'user', parts: [{ text: request.user }] },
+                ],
+                config: request.jsonMode ? { responseMimeType: 'application/json' } : {},
             });
-
-            const result = await chat.sendMessage(request.user);
-            const response = await result.response;
-            const text = response.text();
+            const text = response.text ?? '';
 
             return {
                 text,
@@ -69,18 +66,17 @@ export class GeminiSkillAdapter {
     async structuredOutput(request: { system: string, user: string, schema: any }) {
         if (!this.client) return null;
 
-        const model = this.client.getGenerativeModel({
-            model: this.modelPro,
-            generationConfig: {
-                response_mime_type: 'application/json',
-                response_schema: request.schema
-            }
-        });
-
         try {
-            const result = await model.generateContent(request.user);
-            const response = await result.response;
-            return JSON.parse(response.text());
+            // @google/genai API: models.generateContent with a JSON response config.
+            const response = await this.client.models.generateContent({
+                model: this.modelPro,
+                contents: [{ role: 'user', parts: [{ text: request.user }] }],
+                config: {
+                    responseMimeType: 'application/json',
+                    responseSchema: request.schema,
+                },
+            });
+            return JSON.parse(response.text ?? 'null');
         } catch (error: any) {
             console.error(`❌ [GeminiAdapter] Structured Output failed: ${error.message}`);
             return null;
