@@ -46,6 +46,9 @@ export class PersistentMemory {
   private storagePath: string;
   private entries: Map<string, MemoryEntry> = new Map();
   private registry: ReturnType<typeof getProviderRegistry> | null = null;
+  // Serializes persistence writes in mutation order so an older snapshot can
+  // never overwrite a newer one.
+  private writeQueue: Promise<void> = Promise.resolve();
 
   constructor(storagePath: string = './data/memory') {
     this.storagePath = storagePath;
@@ -80,12 +83,21 @@ export class PersistentMemory {
   }
 
   /**
-   * Persist all entries to the memory.json file
+   * Persist all entries to the memory.json file.
+   * Writes are serialized in mutation order, and each snapshot is written to a
+   * temporary file and atomically renamed, so readers never see a partial file.
    */
   private async persistToFile(): Promise<void> {
-    const memoryFile = path.join(this.storagePath, 'memory.json');
-    const data = JSON.stringify(Array.from(this.entries.values()), null, 2);
-    await fs.promises.writeFile(memoryFile, data, 'utf-8');
+    const run = this.writeQueue.then(async () => {
+      const memoryFile = path.join(this.storagePath, 'memory.json');
+      const tmpFile = `${memoryFile}.${process.pid}.tmp`;
+      const data = JSON.stringify(Array.from(this.entries.values()), null, 2);
+      await fs.promises.writeFile(tmpFile, data, 'utf-8');
+      await fs.promises.rename(tmpFile, memoryFile);
+    });
+    // Keep the queue alive even if a write fails; surface the error to the caller.
+    this.writeQueue = run.catch(() => undefined);
+    await run;
   }
 
   /**

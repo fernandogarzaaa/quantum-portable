@@ -5,14 +5,21 @@
  */
 
 export interface QuantumDecision {
-  recommendation: string;
-  confidence: number;
   predictionId: string;
+  optimizedBest: string | null;
+  confidence: number;
+  alternatives: string[];
+  engineVersion: string;
+  metaReflection?: string;
   [key: string]: unknown;
 }
 
 export interface QuantumEngineStats {
-  engineVersion: string;
+  version: string;
+  memoryItems: number;
+  historyLength: number;
+  predictionsCount: number;
+  successRate: number;
   [key: string]: unknown;
 }
 
@@ -46,7 +53,7 @@ export class QuantumSwarm {
 
 export default class QuantumEngine {
   annealing: { temperature: number; coolingRate: number; [key: string]: unknown };
-  quantumSolve(question: string, options: string[], criteria: string[]): QuantumDecision;
+  quantumSolve(question: string, options: string[], criteria: string[]): Promise<QuantumDecision>;
   reportOutcome(predictionId: string, success: boolean, details?: Record<string, unknown>): void;
   exportLearningState(): unknown;
   importLearningState(state: unknown): void;

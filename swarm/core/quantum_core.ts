@@ -40,7 +40,7 @@ export class QuantumSwarmCore {
         this.savedStates.set(stateId, {
             state,
             timestamp: new Date().toISOString(),
-            version: this.engine.getStats().engineVersion
+            version: this.engine.getStats().version
         });
         await this.persistStates();
     }
@@ -75,11 +75,19 @@ export class QuantumSwarmCore {
     }
 
     /**
+     * Ensure the on-disk state directory exists before any persistence write
+     */
+    private async ensureStateDir(): Promise<void> {
+        await fs.mkdir(path.dirname(STATE_FILE), { recursive: true });
+    }
+
+    /**
      * Persist states to file
      */
     private async persistStates(): Promise<void> {
         try {
             const data = Object.fromEntries(this.savedStates);
+            await this.ensureStateDir();
             await fs.writeFile(STATE_FILE, JSON.stringify(data, null, 2));
         } catch (error) {
             console.error('❌ [Quantum] Failed to persist states:', error);
@@ -112,7 +120,7 @@ export class QuantumSwarmCore {
                 : null;
             if (!state) return;
 
-            await fs.mkdir(path.dirname(ORACLE_STATE_FILE), { recursive: true });
+            await this.ensureStateDir();
             await fs.writeFile(ORACLE_STATE_FILE, JSON.stringify({
                 timestamp: new Date().toISOString(),
                 state
@@ -140,6 +148,7 @@ export class QuantumSwarmCore {
 
     private async persistCoherenceState(): Promise<void> {
         try {
+            await this.ensureStateDir();
             await fs.writeFile(COHERENCE_STATE_FILE, JSON.stringify({
                 timestamp: new Date().toISOString(),
                 target: this.coherenceTarget,
